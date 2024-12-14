@@ -56,8 +56,8 @@ education:
   - area: M.Sc. in Transportation Systems
     institution: Technical University of Munich (TUM), Munich, Germany
     CGPA: 1.6/4.00 (best 1.0 out of 4.0)
-    date_start: 2021
-    date_end: 2024
+    # date_start: 2021
+    # date_end: 2024
     Thesis: |
       Optimizing Incremental Vertiport Siting for Urban Air Mobility: A Multi-Objective Approach to Sustainability, Capacity, and Economic Viability.
       Supervisors: [Prof. Dr. Constantinos Antoniou](https://www.professoren.tum.de/en/antoniou-constantinos), [M.Sc. Hao Wu](https://www.mos.ed.tum.de/vvs/mitarbeiterinnen/hao-wu/), [M.Sc. Tao Guo](https://www.mos.ed.tum.de/en/vvs/mitarbeiterinnen/tao-guo/)
@@ -67,8 +67,8 @@ education:
       url: 'https://drive.google.com/file/d/1aYFCpmUqeAwnXlz41LY9MzfEnZRSNJLM/view?usp=sharing'
   - area: B.Sc. in Civil and Environmental Engineering
     institution: Islamic University of Technology, Bangladesh
-    date_start: 2014
-    date_end: 2017
+    # date_start: 2014
+    # date_end: 2017
     CGPA: 3.37/4.00 (best 4.0 out of 4.0)
     Thesis: Comparing Comfort in Public Transports in Dhaka 
     Supervisor: Prof. Dr. Moinul Hossain
@@ -88,8 +88,8 @@ work:
     company_name: Icon Engineering Services Ltd.
     company_url: 'https://iconengg.com/'
     company_logo: ''
-    date_start: 2018
-    date_end: 2022
+    # date_start: 2018
+    # date_end: 2022
     summary: |2-
       Projects: Dhaka Metro Rail Project, First Dhaka Elevated Expressway, Hazrat Shahjalal International Airport Terminal 3 Expansion Project
       Responsibilities: Pile Integrity Testing, Data Analysis, Website Management, Corporate Publishing
@@ -154,14 +154,14 @@ languages:
 awards:
   - title: Volunteer
     url: https://drive.google.com/file/d/1DZo_40KiwRuSPq2aYAOMcvoxfOV_2dSY/view
-    date: '2016'
+    # date: '2016'
     awarder: Light of Hope (Children Education)
     icon: 
     summary: |
       Worked for Children education and medical supply.
   - title: Volunteer
     url: https://drive.google.com/file/d/1ysuFu-8v4YoE6usPbf_Mpe6oIYIvqkgS/view
-    date: '2015'
+    # date: '2015'
     awarder: It’s Humanity Foundation (Fighting Poverty)
     icon: 
     summary: |

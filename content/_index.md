@@ -17,7 +17,7 @@ sections:
       # Show a call-to-action button under your biography? (optional)
       button:
         text: Download CV
-        url: uploads/resume.pdf
+        url: https://drive.google.com/file/d/1hXfRqSyS6pbTCbKHQEn2xqwsJffGK1oc/view
     design:
       css_class: dark
       background:
@@ -32,14 +32,11 @@ sections:
           parallax: false
   - block: markdown
     content:
-      title: '📚 My Research'
+      title: '🚀 Researcher in Agent-Based Modeling & Optimization'
       subtitle: ''
       text: |-
-        Use this area to speak to your mission. I'm a research scientist in the Moonshot team at DeepMind. I blog about machine learning, deep learning, and moonshots.
+        Focused on MATSim, large-scale simulations, and data analysis. Interested in advancing AI/ML and LLM-driven agent-based modeling. Open to collaborations—let’s connect! 🤝
 
-        I apply a range of qualitative and quantitative methods to comprehensively investigate the role of science and technology in the economy.
-        
-        Please reach out to collaborate 😃
     design:
       columns: '1'
   - block: collection

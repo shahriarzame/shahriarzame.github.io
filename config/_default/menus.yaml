@@ -20,7 +20,7 @@ main:
   #   url: '#notes_in_r'
   #   weight: 32
   - name: "Blog"
-    url: '#regular_post'
+    url: '/regular_post/'
     weight: 33
 
   - name: "Gallery"

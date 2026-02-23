@@ -1,4 +1,14 @@
 ---
+# TEMPLATE FILE - DO NOT BUILD
+# Copy this file when creating a new post
+# This prevents Hugo from building the template as an actual post
+_build:
+  render: false
+  list: false
+
+# When you copy this template, DELETE the _build section above
+# Then fill in the fields below:
+
 title: "Your Post Title Here"
 author: admin
 date: YYYY-MM-DD

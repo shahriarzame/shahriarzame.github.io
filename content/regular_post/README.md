@@ -1,3 +1,11 @@
+---
+# This README is for documentation purposes only and should not be published
+# Setting _build.render to false prevents Hugo from processing this file
+_build:
+  render: false
+  list: false
+---
+
 # Blog Post Creation Guide
 
 This guide will help you create new blog posts for your website quickly and easily.
@@ -15,9 +23,11 @@ mkdir content/regular_post/my-post-title-2025
 # 2. Copy the template
 cp content/regular_post/_template.md content/regular_post/my-post-title-2025/index.md
 
-# 3. Edit the file
+# 3. Edit the file and DELETE the _build section at the top
 code content/regular_post/my-post-title-2025/index.md
 ```
+
+**IMPORTANT:** After copying the template, delete the `_build:` section from the front matter (lines 2-6). This section prevents Hugo from building the template file itself.
 
 ### Method 2: Single Markdown File (For simple text-only posts)
 
@@ -25,9 +35,11 @@ code content/regular_post/my-post-title-2025/index.md
 # 1. Copy the template directly
 cp content/regular_post/_template.md content/regular_post/my-post-title-2025.md
 
-# 2. Edit the file
+# 2. Edit the file and DELETE the _build section at the top
 code content/regular_post/my-post-title-2025.md
 ```
+
+**IMPORTANT:** After copying the template, delete the `_build:` section from the front matter (lines 2-6).
 
 ---
 
@@ -313,6 +325,7 @@ git push origin main
 - [ ] Copy template file
 
 ### While Writing
+- [ ] **DELETE the `_build:` section** from the front matter (lines 2-6 in template)
 - [ ] Update front matter (title, date, slug, tags, summary)
 - [ ] Write content in Markdown
 - [ ] Add images to post folder (if needed)

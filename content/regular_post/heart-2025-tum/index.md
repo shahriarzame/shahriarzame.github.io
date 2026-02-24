@@ -31,6 +31,8 @@ output:
 
 ### hEART 2025 – An Inspiring Gathering
 
+{{< figure src="heart2025-photo.jpg" alt="hEART 2025 at TUM" >}}
+
 The **13th Symposium of the European Association for Research in Transportation (hEART 2025)** took place in Munich, bringing together an international community of transportation researchers and practitioners. This year’s symposium was co-hosted by the **Chair of Transportation Systems Engineering (TSE)** and the **Chair of Traffic Engineering and Control** at the **Technical University of Munich (TUM)**.  
 
 As a **doctoral researcher at TUM**, it was both a privilege and an honor to not only attend but also contribute to hosting this high-level conference.  
@@ -50,5 +52,5 @@ I am grateful to the organizing team, participants, and sponsors for making this
 
 Here’s to continuing the dialogue, advancing the science of transportation, and building networks that will shape the future of mobility. 🚀  
 
-{{< figure src="heart2025-photo.jpg" alt="hEART 2025 at TUM" >}}
+
 

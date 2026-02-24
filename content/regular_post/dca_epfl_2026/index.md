@@ -66,4 +66,4 @@ I'm excited to apply these advanced discrete choice modeling tools to:
 
 *#DiscreteChoice #DemandModeling #TransportationResearch #EPFL #MIT #BehavioralModeling #TUM*
 
-{{< figure src="CERTIFICATION_DCA_EPFL_page-0001" alt="Certificate: Discrete Choice Analysis: Predicting Individual Behavior and Market Demand, January 25 - 29, 2026, Ecole Polytechnique Fédérale de Lausanne, Switzerland" >}}
+{{< figure src="CERTIFICATION_DCA_EPFL_page-0001.jpg" alt="Certificate: Discrete Choice Analysis: Predicting Individual Behavior and Market Demand, January 25 - 29, 2026, Ecole Polytechnique Fédérale de Lausanne, Switzerland" >}}

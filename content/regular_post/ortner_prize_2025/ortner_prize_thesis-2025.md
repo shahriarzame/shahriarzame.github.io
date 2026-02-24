@@ -29,6 +29,8 @@ output:
 
 ### A Special Recognition
 
+{{< figure src="20251113_TUM_Awards_Dinner_AE_Ortner_Preis.jpg" alt="Johannes B. Ortner-Stiftung Prize Winners, TUM Awards Dinner 2025." >}}
+
 I am deeply honored to share that the **Johannes B. Ortner-Stiftung** has awarded my master’s thesis with a prize for outstanding research by early-career scientists at the **Technical University of Munich (TUM)**.
 
 The recognition comes with a prize of **€1,500**, following a nomination from the **TUM School of Engineering and Design** and confirmation by the foundation’s board.

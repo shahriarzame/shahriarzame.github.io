@@ -12,8 +12,8 @@ tags:
   - Sustainability
   - TUM
 subtitle: ""
-summary: ""
-authors: []
+summary: "SEE-FAr develops simulation- and optimization-based methods to evaluate freight electrification and automation strategies, with focus on charging infrastructure trade-offs and system-level impacts."
+authors: [admin]
 lastmod: 2025-08-05T00:00:00-06:00
 featured: false
 image:

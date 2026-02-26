@@ -15,7 +15,7 @@ tags:
   - Training
 subtitle: ""
 summary: "A week-long intensive training on random utility models, nested and mixed logit, hybrid choice models, Bayesian estimation, and forecasting techniques at EPFL, Switzerland."
-authors: []
+authors: [admin]
 lastmod: 2026-02-24T12:00:00-06:00
 featured: false
 

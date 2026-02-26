@@ -13,8 +13,8 @@ tags:
   - Traffic Engineering
   - MATSim
 subtitle: ""
-summary: ""
-authors: []
+summary: "Highlights from hEART 2025 at TUM, including conference hosting experience, key discussions, and research networking outcomes."
+authors: [admin]
 lastmod: 2025-09-01T00:00:00-06:00
 featured: false
 image:

@@ -21,7 +21,7 @@ removePathAccents: true
 ############################
 
 module:
-  proxy: https://goproxy.cn
+  proxy: direct
   imports:
     - path: github.com/wowchemy/wowchemy-hugo-themes/modules/wowchemy-plugin-netlify
     - path: github.com/wowchemy/wowchemy-hugo-themes/modules/wowchemy-plugin-reveal

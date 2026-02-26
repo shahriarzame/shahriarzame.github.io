@@ -26,15 +26,18 @@ publication_short: ""
 abstract: ""
 
 # Summary. An optional shortened abstract.
-summary: ""
+summary: "Ongoing working paper on robust data-driven car-following model development and testing for transportation simulation applications."
 
-tags: []
+tags:
+- "Car-following models"
+- "Data-driven modelling"
+- "Transportation simulation"
 categories: []
 featured: false
 
 # Custom links (optional).
 #   Uncomment and edit lines below to show custom links.
-links:
+links: []
 # - name: Job Market Paper
 #   url: https://academic.oup.com/erae/advance-article/doi/10.1093/erae/jbae015/7685860 
 #   icon_pack: fab

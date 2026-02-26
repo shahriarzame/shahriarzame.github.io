@@ -1,4 +1,12 @@
 ---
+cms_exclude: true
+_build:
+  render: never
+  list: never
+cascade:
+  _build:
+    render: never
+    list: never
 # Display name
 title: Yabin Da
 

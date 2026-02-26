@@ -22,7 +22,8 @@ marketing:
     description: 'Shahriar Iqbal Zame – Research Associate and PhD Candidate at TUM, Chair of Transportation Systems Engineering'
     twitter: ''
   analytics:
-    google_analytics: 'UA-174643868-2'
+    # Use a GA4 Measurement ID such as G-XXXXXXXXXX when available.
+    google_analytics: ''
     baidu_tongji: ''
   verification:
     google: ''
@@ -73,19 +74,19 @@ features:
   math:
     enable: true
   privacy_pack:
-    enable: false
+    enable: true
   repository:
-    url: 'https://github.com/dayabin/PersonalWebisteNewVersion'
+    url: 'https://github.com/shahriarzame/shahriarzame.github.io'
     content_dir: content
-    branch: master
+    branch: main
   avatar:
     gravatar: false
     shape: circle
   comment:
-    provider: 'disqus'
+    provider: ''
     disqus:
-      shortname: 'yabin-da'
-      show_count: true
+      shortname: ''
+      show_count: false
     commento:
       url: ''
   search:

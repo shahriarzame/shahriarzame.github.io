@@ -10,8 +10,8 @@ tags:
   - TUM
   - Johannes B. Ortner-Stiftung
 subtitle: ""
-summary: ""
-authors: []
+summary: "Recognition of my master's thesis at TUM through the Johannes B. Ortner-Stiftung award for outstanding early-career research."
+authors: [admin]
 lastmod: 2025-08-05T00:00:00-06:00
 featured: false
 image:

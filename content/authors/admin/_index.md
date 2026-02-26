@@ -63,7 +63,7 @@ social:
 # and uncomment the lines below.
 - icon: cv
   icon_pack: ai
-  link: uploads/resume.pdf
+  link: /uploads/resume.pdf
 
 # Enter email to display Gravatar (if Gravatar enabled in Config)
 email: "shahriar.zame@tum.de"
@@ -74,6 +74,6 @@ highlight_name: true
 
 I am a **Research Associate and PhD Candidate** at the Technical University of Munich (TUM), Chair of Transportation Systems Engineering, working on the DFG-funded project [SEE-FAr](https://www.mos.ed.tum.de/vvs/forschung/projekte/see-far/).
 
-My research combines **agent-based simulations, optimization, and choice modelling** to explore innovative electrification and automation strategies for road freight. With an **M.Sc. in Transportation Systems (TUM)** and professional experience in large-scale infrastructure projects, I am passionate about designing sustainable transport systems that reduce emissions and enhance efficiency in logistics.
+My research combines **agent-based simulations, optimization, and choice modelling** to explore innovative electrification and automation strategies for road freight. With an **M.Sc. in Transportation Systems (TUM)** and professional experience in large-scale infrastructure projects, I focus on methods that support both **policy design** and **industry decision-making** in sustainable logistics.
 
 {{< icon name="download" pack="fas" >}} Download my {{< staticref "uploads/resume.pdf" "newtab" >}}CV{{< /staticref >}}

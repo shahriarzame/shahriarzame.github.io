@@ -1,0 +1,21 @@
+<script>
+  (function () {
+    function setCvLinksToNewTab() {
+      var links = document.querySelectorAll(
+        'a[href="/uploads/resume.pdf"], a[href="uploads/resume.pdf"]'
+      );
+      links.forEach(function (a) {
+        a.setAttribute("target", "_blank");
+        a.setAttribute("rel", "noopener");
+      });
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", setCvLinksToNewTab);
+    } else {
+      setCvLinksToNewTab();
+    }
+
+    window.addEventListener("pageshow", setCvLinksToNewTab);
+  })();
+</script>

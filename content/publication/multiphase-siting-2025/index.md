@@ -11,7 +11,7 @@ authors:
 - Constantinos Antoniou
 
 date: 2025-06-18T00:00:00+00:00  # Month is December 2025; adjust as needed
-doi: https://doi.org/10.1016/j.commtr.2025.100186
+doi: 10.1016/j.commtr.2025.100186
 
 publication_types: article-journal
 

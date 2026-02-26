@@ -10,7 +10,7 @@ authors:
 - Constantinos Antoniou
 
 date: 2025-06-26T00:00:00+00:00  # Publication date (June 26, 2025)
-doi: https://doi.org/10.1016/j.urbmob.2025.100117
+doi: 10.1016/j.urbmob.2025.100117
 
 # Schedule page publish date (NOT publication's date).
 # publishDate: 2025-06-26T22:45:34-06:00

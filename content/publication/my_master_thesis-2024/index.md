@@ -10,7 +10,7 @@ authors:
 - Constantinos Antoniou
 
 date: 2022-10-01T00:00:00+00:00  # Publication date (October 2022, adjust if needed)
-doi: https://doi.org/10.13140/RG.2.2.15342.72008
+doi: 10.13140/RG.2.2.15342.72008
 
 # Schedule page publish date (NOT publication's date).
 # publishDate: 2022-10-01T22:45:34-06:00

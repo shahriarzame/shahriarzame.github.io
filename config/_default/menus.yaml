@@ -5,10 +5,10 @@
 
 main:
   - name: "Projects"
-    url: '#projects'
+    url: '/projects/'
     weight: 15
   - name: "Publications"
-    url: '#publication'
+    url: '/publication/'
     weight: 20
   # - name: "Teaching"
   #   url: '#teaching'
@@ -24,7 +24,7 @@ main:
     weight: 33
 
   - name: "Gallery"
-    url: '#gallery'
+    url: '/gallery/'
     weight: 45
 
   # - name: "Contact"

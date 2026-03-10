@@ -23,6 +23,8 @@ hugo --gc --minify -b https://shahriarzame.github.io/
 hugo
 ```
 
+> CI builds use Hugo **0.119.0** (extended). Keep local validation aligned with CI when troubleshooting.
+
 ### Import Publications from BibTeX
 ```bash
 # Requires: pip install academic==0.10.0
@@ -41,10 +43,20 @@ academic import publications.bib content/publication/ --compact
   - `menus.yaml`: Navigation structure
   - `languages.yaml`: Internationalization settings
 
+### Navigation Model
+- Header links for `Projects`, `Publications`, and `Gallery` point to dedicated pages:
+  - `/projects/`
+  - `/publication/`
+  - `/gallery/`
+- `Blog` remains `/regular_post/`.
+- `CV` remains `/uploads/resume.pdf`.
+- Homepage (`content/_index.md`) keeps section previews for projects, publications, and gallery.
+
 ### Content Structure
 - `content/authors/admin/`: Author profile (main site owner)
 - `content/publication/`: Research publications (auto-generated from BibTeX)
-- `content/projects/`: Project pages
+- `content/projects/`: Project pages and section index (`_index.md`)
+- `content/gallery/`: Dedicated gallery page (`index.md`)
 - `content/regular_post/`: Blog posts and news items
 - Content uses YAML front matter with Markdown body
 - Publications reference the site owner as `admin` in author lists
@@ -65,6 +77,11 @@ academic import publications.bib content/publication/ --compact
 - Auto-creates PR with imported publications
 
 ## Working with Content
+
+### Homepage vs Dedicated Pages
+- Full listings/details are shown on dedicated section pages (`/projects/`, `/publication/`, `/gallery/`).
+- Homepage still shows selected previews for projects/publications/gallery.
+- Homepage selection behavior is controlled in `content/_index.md` by each section's `count`, `filters`, `offset`, and `order`.
 
 ### Adding Publications
 1. Add entry to `publications.bib` (root directory)
@@ -93,6 +110,8 @@ tags: [tag1, tag2]
 
 - Hugo modules require internet connection for first build (uses goproxy.cn)
 - Extended Hugo version is mandatory for SCSS compilation
+- CI and deploy workflows are pinned to Hugo `0.119.0`; local newer Hugo versions may fail with theme module incompatibilities
 - The `admin` keyword in publications references the site owner
 - Images for publications go in `content/publication/<pub-name>/` directory
 - Static files (PDFs, images) go in `static/` directory
+- Keep `Projects`, `Publications`, and `Gallery` menu links as dedicated routes in `config/_default/menus.yaml`; do not switch them back to hash anchors unless intentionally reverting navigation behavior

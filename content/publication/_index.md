@@ -1,5 +1,7 @@
 ---
 title: Publications
+subtitle: Journal articles, working papers, and thesis outputs
+summary: "Full list of research outputs."
 cms_exclude: true
 
 # View.

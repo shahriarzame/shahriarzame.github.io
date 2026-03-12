@@ -1,117 +1,153 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working in this repository.
 
-## Project Overview
+## Project Snapshot
 
-This is an academic personal website built with Hugo using the Wowchemy Academic theme. The site is for Shahriar Iqbal Zame, a PhD candidate and Research Associate at TUM's Chair of Transportation Systems Engineering. The site is deployed to GitHub Pages at https://shahriarzame.github.io/.
+- Personal academic website for Shahriar Iqbal Zame.
+- Built with Hugo + Wowchemy modules.
+- Primary deployment target: GitHub Pages.
+- Canonical URL: `https://shahriarzame.github.io/`.
+
+## Stack and Version Pins
+
+- Hugo (extended) is pinned to `0.119.0` in CI and Netlify config.
+- Theme/modules are managed with Go modules in `go.mod`:
+  - `github.com/wowchemy/wowchemy-hugo-themes/modules/wowchemy-bootstrap/v5 v5.9.2`
+  - `github.com/wowchemy/wowchemy-hugo-themes/modules/wowchemy-plugin-netlify`
+  - `github.com/wowchemy/wowchemy-hugo-themes/modules/wowchemy-plugin-reveal`
+- Config is split across:
+  - `config/_default/config.yaml`
+  - `config/_default/params.yaml`
+  - `config/_default/menus.yaml`
+  - `config/_default/languages.yaml`
+
+### Compatibility Note
+
+- CI is pinned to Hugo `0.119.0`; newer local Hugo versions may fail with module incompatibilities.
+- If local `hugo` is newer and fails, use pinned local validation:
+
+```powershell
+go run github.com/gohugoio/hugo@v0.119.0 --gc --minify --baseURL https://example.org/
+```
 
 ## Key Commands
 
 ### Local Development
-```bash
-cd shahriarzame.github.io
+
+```powershell
 hugo server
 ```
 
-### Build Site
-```bash
-# Production build with minification
+### Production Build
+
+```powershell
 hugo --gc --minify -b https://shahriarzame.github.io/
-
-# Development build
-hugo
 ```
 
-> CI builds use Hugo **0.119.0** (extended). Keep local validation aligned with CI when troubleshooting.
+### Repo Quality Checks
 
-### Import Publications from BibTeX
-```bash
-# Requires: pip install academic==0.10.0
-academic import publications.bib content/publication/ --compact
+```powershell
+pwsh -NoProfile -File scripts/check-frontmatter.ps1
+pwsh -NoProfile -File scripts/check-links.ps1
 ```
 
-## Architecture
+## Deployment and CI
 
-### Hugo Configuration
-- **Framework**: Hugo v0.119.0 (extended version required)
-- **Theme**: Wowchemy Academic (v5.9.2) via Hugo modules
-- **Go Modules**: Uses Go 1.15+ module system for theme management
-- Configuration is split across `config/_default/`:
-  - `config.yaml`: Core Hugo settings, modules, taxonomies
-  - `params.yaml`: Wowchemy theme parameters, appearance, SEO
-  - `menus.yaml`: Navigation structure
-  - `languages.yaml`: Internationalization settings
+### GitHub Pages (Primary)
 
-### Navigation Model
-- Header links for `Projects`, `Publications`, and `Gallery` point to dedicated pages:
+- Workflow: `.github/workflows/publish.yaml`
+- Trigger: push to `main` or manual dispatch.
+- Build job uses Hugo `0.119.0` extended and deploys via `actions/deploy-pages@v4`.
+
+### PR Validation
+
+- Workflow: `.github/workflows/pr-quality.yml`
+- Trigger: pull requests targeting `main`.
+- Jobs/check names:
+  - `hugo-build`
+  - `frontmatter-check`
+  - `link-check`
+
+### Netlify (Secondary/Optional)
+
+- Config: `netlify.toml`
+- Build command: `hugo --gc --minify -b $URL`
+- Environment pin: `HUGO_VERSION = "0.119.0"`
+
+## Repository Structure
+
+- `content/authors/admin/`: primary author profile.
+- `content/projects/`: project detail pages.
+- `content/publication/`: publication pages.
+- `content/regular_post/`: blog/news posts.
+- `content/gallery/`: dedicated gallery page.
+- `static/uploads/`: downloadable assets (including CV PDFs).
+- `layouts/partials/hooks/body-end/cv-links.html`: custom JS hook for CV link behavior.
+- `scripts/`: repository checks used by CI.
+
+## Content and Navigation Model
+
+- Main menu (`config/_default/menus.yaml`) points to:
   - `/projects/`
   - `/publication/`
+  - `/regular_post/`
   - `/gallery/`
-- `Blog` remains `/regular_post/`.
-- `CV` remains `/uploads/resume.pdf`.
-- Homepage (`content/_index.md`) keeps section previews for projects, publications, and gallery.
+  - `/uploads/resume.pdf`
+- Homepage layout is defined in `content/_index.md` and includes hero, biography, selected collections, gallery block, and contact block.
 
-### Content Structure
-- `content/authors/admin/`: Author profile (main site owner)
-- `content/publication/`: Research publications (auto-generated from BibTeX)
-- `content/projects/`: Project pages and section index (`_index.md`)
-- `content/gallery/`: Dedicated gallery page (`index.md`)
-- `content/regular_post/`: Blog posts and news items
-- Content uses YAML front matter with Markdown body
-- Publications reference the site owner as `admin` in author lists
+## Legacy Content Policy
 
-### Deployment
-- **Primary**: GitHub Actions workflow (`.github/workflows/publish.yaml`)
-  - Triggers on push to `main` branch
-  - Builds with Hugo 0.119.0 in production environment
-  - Deploys to GitHub Pages via `actions/deploy-pages@v4`
-- **Alternative**: Netlify support via `netlify.toml`
-  - Command: `hugo --gc --minify -b $URL`
-  - Same Hugo version (0.119.0)
+- Legacy sections are intentionally archived:
+  - `content/teaching/`
+  - `content/data/`
+  - `content/notes_in_r/`
+- Their `_index.md` files use `_build` controls (`render: never`, `list: never`) and sitemap/list suppression.
+- Governance page: `content/legacy-archive.md`.
 
-### Publication Import Automation
-- Workflow: `.github/workflows/import-publications.yml`
-- Monitors `publications.bib` file for changes
-- Uses `academic` CLI tool (Python package) to convert BibTeX to Markdown
-- Auto-creates PR with imported publications
+## Front Matter Contract (Enforced by Script)
 
-## Working with Content
+For active content under:
+- `content/regular_post/**/index.md`
+- `content/publication/**/index.md`
+- `content/projects/*.md` (excluding `_index.md`)
 
-### Homepage vs Dedicated Pages
-- Full listings/details are shown on dedicated section pages (`/projects/`, `/publication/`, `/gallery/`).
-- Homepage still shows selected previews for projects/publications/gallery.
-- Homepage selection behavior is controlled in `content/_index.md` by each section's `count`, `filters`, `offset`, and `order`.
+Required:
+- `title` (non-empty)
+- `date` (non-empty)
+- `summary` (non-empty)
+- `authors` (non-empty list)
+- `tags` (non-empty list)
 
-### Adding Publications
-1. Add entry to `publications.bib` (root directory)
-2. GitHub Actions will automatically create a PR with converted Markdown
-3. Or manually run: `academic import publications.bib content/publication/ --compact`
+## Link and Asset Validation Rules (Enforced by Script)
 
-### Publication Front Matter Format
-```yaml
-title: "Publication Title"
-authors: [Author Name, admin, Other Author]
-date: YYYY-MM-DDTHH:MM:SS+00:00
-doi: https://doi.org/...
-publication_types: article-journal
-publication: "Journal Name, Vol. X"
-abstract: >-
-  Multi-line abstract...
-tags: [tag1, tag2]
-```
+`scripts/check-links.ps1` validates:
+- Hugo `figure` shortcode image sources.
+- Hugo `staticref` targets.
+- Markdown links to local files.
+- Uploaded asset references in `config/_default/menus.yaml` (e.g., CV link).
 
-### Author Profile
-- Main profile: `content/authors/admin/_index.md`
-- Includes social links, education, interests, bio
-- Resume/CV should be placed at `static/uploads/resume.pdf`
+## Analytics
 
-## Important Notes
+- GA4 is configured via `config/_default/params.yaml`:
+  - `marketing.analytics.google_analytics`
+- Do not manually paste an extra Google tag snippet into templates when this field is set.
+- Current theme analytics partial injects gtag in production and includes outbound link click tracking.
+- `features.privacy_pack.enable` is enabled in params, which applies privacy-oriented GA config from the theme partial.
 
-- Hugo modules require internet connection for first build (uses goproxy.cn)
-- Extended Hugo version is mandatory for SCSS compilation
-- CI and deploy workflows are pinned to Hugo `0.119.0`; local newer Hugo versions may fail with theme module incompatibilities
-- The `admin` keyword in publications references the site owner
-- Images for publications go in `content/publication/<pub-name>/` directory
-- Static files (PDFs, images) go in `static/` directory
-- Keep `Projects`, `Publications`, and `Gallery` menu links as dedicated routes in `config/_default/menus.yaml`; do not switch them back to hash anchors unless intentionally reverting navigation behavior
+## Custom Behavior
+
+- `layouts/partials/hooks/body-end/cv-links.html` forces CV links (`/uploads/resume.pdf`) to open in a new tab with `rel="noopener"`.
+
+## Contributor Workflow
+
+1. Branch from `main`.
+2. Open PR to `main`.
+3. Ensure all PR checks pass (`hugo-build`, `frontmatter-check`, `link-check`).
+4. Use squash merge.
+
+## Removed/Not Present
+
+- No active workflow for BibTeX auto-import.
+- No active workflow for notebook import.
+- Do not assume a `publications.bib`-driven pipeline exists in current state.

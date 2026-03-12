@@ -23,7 +23,7 @@ marketing:
     twitter: ''
   analytics:
     # Use a GA4 Measurement ID such as G-XXXXXXXXXX when available.
-    google_analytics: ''
+    google_analytics: 'G-H4PQ4H23N5'
     baidu_tongji: ''
   verification:
     google: ''

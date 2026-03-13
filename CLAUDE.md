@@ -148,6 +148,10 @@ Required:
 
 ## Removed/Not Present
 
-- No active workflow for BibTeX auto-import.
-- No active workflow for notebook import.
-- Do not assume a `publications.bib`-driven pipeline exists in current state.
+- Hugo modules require internet connection for first build (uses goproxy.cn)
+- Extended Hugo version is mandatory for SCSS compilation
+- CI and deploy workflows are pinned to Hugo `0.119.0`; local newer Hugo versions may fail with theme module incompatibilities
+- The `admin` keyword in publications references the site owner
+- Images for publications go in `content/publication/<pub-name>/` directory
+- Static files (PDFs, images) go in `static/` directory
+- Keep `Projects`, `Publications`, and `Gallery` menu links as dedicated routes in `config/_default/menus.yaml`; do not switch them back to hash anchors unless intentionally reverting navigation behavior

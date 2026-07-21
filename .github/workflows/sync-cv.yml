@@ -12,9 +12,12 @@ name: Sync CV PDF
 #     against the account quota.
 #   - Read-only access to CV_PhD is less privilege than write access to this repo.
 
+# Manual only, by choice. A daily cron was considered and dropped: the CV changes
+# a handful of times a year, always deliberately, so a schedule would spend most of
+# its life confirming that nothing changed -- while still costing an "Approve and
+# run" click whenever GitHub gates the bot-authored PR. Run it from the Actions tab
+# (or `gh workflow run sync-cv.yml`) after pushing a CV change.
 on:
-  schedule:
-    - cron: '17 5 * * *'      # daily, 05:17 UTC
   workflow_dispatch:
 
 permissions:

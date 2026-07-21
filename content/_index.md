@@ -5,53 +5,22 @@ date: 2022-10-24
 type: landing
 
 sections:
-  - block: hero
-    content:
-      title: Data-Driven Transportation Research for Decarbonized Freight
-      cta:
-        label: Download CV
-        url: /uploads/resume.pdf
-      cta_alt:
-        label: Contact
-        url: '#contact'
-      text: |-
-        I am a doctoral candidate at TUM working at the intersection of **agent-based simulation**, **optimization**, and **behavioral modelling** for freight electrification and automation.
-
-        This site highlights my research outputs, applied projects, and professional updates for both academic and industry audiences.
-    design:
-      background:
-        gradient_end: '#005a63'
-        gradient_start: '#0f2b46'
-        text_color_light: true
-
   - block: about.biography
     id: about
     content:
       title: Biography
       username: admin
 
-  - block: markdown
-    id: impact
-    content:
-      title: Research Impact and Industry Relevance
-      subtitle: ''
-      text: |-
-        - **System-level analysis for freight transition**: evaluating electrification and automation pathways under realistic operational constraints.
-        - **Decision support**: translating simulation and optimization outputs into policy and infrastructure insights.
-        - **Applied methods**: combining MATSim-based modelling, discrete choice analysis, and data-driven scenario evaluation.
-    design:
-      columns: '2'
-
   - block: collection
-    id: projects
+    id: regular_post
     content:
-      title: Projects
-      subtitle: ''
-      text: Selected projects with methodological depth and practical relevance.
-      count: 4
+      title: News & Updates
+      subtitle: Recent talks, workshops, and research milestones
+      text: ''
+      count: 3
       filters:
         folders:
-          - projects
+          - regular_post
         author: ""
         category: ""
         tag: ""
@@ -82,6 +51,29 @@ sections:
       columns: '2'
       view: citation
 
+  - block: collection
+    id: projects
+    content:
+      title: Projects
+      subtitle: ''
+      text: Selected projects with methodological depth and practical relevance.
+      count: 4
+      filters:
+        folders:
+          - projects
+        author: ""
+        category: ""
+        tag: ""
+        exclude_featured: false
+        exclude_future: false
+        exclude_past: false
+        publication_type: ""
+      offset: 0
+      order: desc
+    design:
+      view: compact
+      columns: '2'
+
   - block: markdown
     id: service
     content:
@@ -95,29 +87,6 @@ sections:
 
         Journal review record verified via [ORCID](https://orcid.org/0000-0002-7323-9771).
     design:
-      columns: '2'
-
-  - block: collection
-    id: regular_post
-    content:
-      title: Blog
-      subtitle: Professional updates and reflections
-      text: ''
-      count: 3
-      filters:
-        folders:
-          - regular_post
-        author: ""
-        category: ""
-        tag: ""
-        exclude_featured: false
-        exclude_future: false
-        exclude_past: false
-        publication_type: ""
-      offset: 0
-      order: desc
-    design:
-      view: compact
       columns: '2'
 
   - block: markdown

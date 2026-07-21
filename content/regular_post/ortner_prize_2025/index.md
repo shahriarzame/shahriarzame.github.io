@@ -15,9 +15,9 @@ authors: [admin]
 lastmod: 2025-08-05T00:00:00-06:00
 featured: false
 image:
-  caption: ""
-  focal_point: ""
-  preview_only: false
+  caption: "Johannes B. Ortner-Stiftung prize winners, TUM Awards Dinner 2025"
+  focal_point: "Smart"
+  preview_only: true
 projects: []
 
 output:

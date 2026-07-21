@@ -20,9 +20,9 @@ lastmod: 2026-02-24T12:00:00-06:00
 featured: false
 
 image:
-  caption: ""
-  focal_point: ""
-  preview_only: false
+  caption: "Discrete Choice Analysis short course at EPFL, Lausanne"
+  focal_point: "Smart"
+  preview_only: true
 
 projects: []
 

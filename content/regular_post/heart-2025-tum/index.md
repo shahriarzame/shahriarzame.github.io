@@ -18,9 +18,9 @@ authors: [admin]
 lastmod: 2025-09-01T00:00:00-06:00
 featured: false
 image:
-  caption: ""
-  focal_point: ""
-  preview_only: false
+  caption: "hEART 2025 at TUM"
+  focal_point: "Smart"
+  preview_only: true
 projects: []
 
 output:

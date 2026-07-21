@@ -21,9 +21,9 @@ lastmod: 2026-07-21T00:00:00+00:00
 featured: true
 
 image:
-  caption: ""
+  caption: "DTN Annual Forum participants in Lisbon, September 2025"
   focal_point: "Smart"
-  preview_only: true
+  preview_only: false
 projects: []
 
 output:

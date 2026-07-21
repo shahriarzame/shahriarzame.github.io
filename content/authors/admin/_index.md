@@ -12,6 +12,8 @@ role: '[Doctoral Candidate & Research Associate](https://www.mos.ed.tum.de/vvs/m
 organizations:
 - name: Chair of Transportation Systems Engineering, Technical University of Munich (TUM)
   url: https://www.mos.ed.tum.de/vvs/
+- name: EIT Urban Mobility Doctoral Training Network (DTN)
+  url: https://www.eiturbanmobility.eu/what-we-offer/education-and-training/doctoral-training-programme/
 
 # Short bio (displayed in user profile at end of posts)
 bio: Research interests include agent-based simulations, optimization, mode choice modeling, freight electrification and automation.
@@ -72,8 +74,6 @@ highlight_name: true
 ---
 
 I am a **Research Associate and PhD Candidate** at the Technical University of Munich (TUM), Chair of Transportation Systems Engineering, working on the DFG-funded project [SEE-FAr](https://www.mos.ed.tum.de/vvs/forschung/projekte/see-far/).
-
-I am also part of the [**EIT Urban Mobility Doctoral Training Network (DTN)**](https://www.eiturbanmobility.eu/what-we-offer/education-and-training/doctoral-training-programme/), a collective of eleven European universities — centrally managed at TUM — that supports doctoral research in urban mobility alongside training in innovation and entrepreneurship. Through the network I took part in the DTN Annual Forum in Lisbon in 2025.
 
 My research combines **agent-based simulations, optimization, and choice modelling** to explore innovative electrification and automation strategies for road freight. With an **M.Sc. in Transportation Systems (TUM)** and professional experience in large-scale infrastructure projects, I focus on methods that support both **policy design** and **industry decision-making** in sustainable logistics.
 

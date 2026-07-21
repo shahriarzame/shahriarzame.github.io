@@ -78,5 +78,3 @@ I am a **Research Associate and PhD Candidate** at the Technical University of M
 My research combines **agent-based simulations, optimization, and choice modelling** to explore innovative electrification and automation strategies for road freight. With an **M.Sc. in Transportation Systems (TUM)** and professional experience in large-scale infrastructure projects, I focus on methods that support both **policy design** and **industry decision-making** in sustainable logistics.
 
 In practice, this means working with large-scale operational data — commercial-fleet GPS trajectories, roadside traffic counts, and network models — to produce **freight demand estimates**, **charging-infrastructure assessments**, and **scenario analyses** that carriers, infrastructure providers, and public authorities can act on.
-
-{{< icon name="download" pack="fas" >}} Download my {{< staticref "uploads/resume.pdf" "newtab" >}}CV{{< /staticref >}}

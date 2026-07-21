@@ -14,7 +14,7 @@ tags:
 subtitle: ""
 summary: "SEE-FAr develops simulation- and optimization-based methods to evaluate freight electrification and automation strategies, with focus on charging infrastructure trade-offs and system-level impacts."
 authors: [admin]
-lastmod: 2025-08-05T00:00:00-06:00
+lastmod: 2026-07-21T00:00:00+00:00
 featured: false
 image:
   caption: ""
@@ -43,7 +43,13 @@ SEE-FAr aims to provide actionable insights into the cost-effectiveness, scalabi
 
 ### Collaboration
 
-SEE-FAr is funded by the **German Research Foundation (DFG)** and is jointly undertaken by an international team of experts in transportation engineering, logistics, and energy systems. At TUM, the project is hosted at the **Chair of Transportation Systems Engineering**, led by **Prof. Dr. Constantinos Antoniou**.
+SEE-FAr is funded by the **German Research Foundation (DFG)** and the **Austrian Science Fund (FWF)**, and is jointly undertaken by an international team of experts in transportation engineering, logistics, and energy systems. At TUM, the project is hosted at the **Chair of Transportation Systems Engineering**, led by **Prof. Dr. Constantinos Antoniou**, together with partners at **BOKU University**, Vienna, led by **Prof. Dr. Yusak Susilo**.
+
+### Workshops
+
+The first SEE-FAr workshop, *Recent Advances in Electric and Automated Road Freight Transport*, was held at TUM on **16 July 2026**, bringing the project team together with invited international experts on freight electrification, charging infrastructure, adoption behaviour, and delivery policy.
+
+Read the full recap: [Hosting and Presenting at the First SEE-FAr Workshop at TUM](/regular_post/see-far-workshop-2026/)
 
 ### Role
 

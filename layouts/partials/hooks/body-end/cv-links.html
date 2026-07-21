@@ -1,8 +1,11 @@
 <script>
   (function () {
     function setCvLinksToNewTab() {
+      // Canonical CV filename, plus the legacy /uploads/resume.pdf alias which
+      // is still published byte-identical so older external links keep working.
       var links = document.querySelectorAll(
-        'a[href="/uploads/resume.pdf"], a[href="uploads/resume.pdf"]'
+        'a[href="/uploads/Shahriar_Iqbal_Zame_CV.pdf"], a[href="uploads/Shahriar_Iqbal_Zame_CV.pdf"], ' +
+          'a[href="/uploads/resume.pdf"], a[href="uploads/resume.pdf"]'
       );
       links.forEach(function (a) {
         a.setAttribute("target", "_blank");

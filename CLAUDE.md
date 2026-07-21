@@ -83,6 +83,10 @@ pwsh -NoProfile -File scripts/check-links.ps1
 - `content/regular_post/`: blog/news posts.
 - `content/gallery/`: dedicated gallery page.
 - `static/uploads/`: downloadable assets (including CV PDFs).
+  - `Shahriar_Iqbal_Zame_CV.pdf` is the canonical CV; `resume.pdf` is a byte-identical
+    legacy alias kept so older external links do not 404.
+  - **Both are generated** from the LaTeX source in the private `shahriarzame/CV_PhD`
+    repo. Do not hand-edit them — edits are overwritten by the CV sync workflow.
 - `layouts/partials/hooks/body-end/cv-links.html`: custom JS hook for CV link behavior.
 - `scripts/`: repository checks used by CI.
 
@@ -93,7 +97,7 @@ pwsh -NoProfile -File scripts/check-links.ps1
   - `/publication/`
   - `/regular_post/`
   - `/gallery/`
-  - `/uploads/resume.pdf`
+  - `/uploads/Shahriar_Iqbal_Zame_CV.pdf`
 - Homepage layout is defined in `content/_index.md` and includes hero, biography, selected collections, gallery block, and contact block.
 
 ## Legacy Content Policy
@@ -137,7 +141,7 @@ Required:
 
 ## Custom Behavior
 
-- `layouts/partials/hooks/body-end/cv-links.html` forces CV links (`/uploads/resume.pdf`) to open in a new tab with `rel="noopener"`.
+- `layouts/partials/hooks/body-end/cv-links.html` forces CV links (`/uploads/Shahriar_Iqbal_Zame_CV.pdf` and the legacy `/uploads/resume.pdf`) to open in a new tab with `rel="noopener"`.
 
 ## Contributor Workflow
 

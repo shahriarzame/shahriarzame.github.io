@@ -74,13 +74,20 @@ pwsh -NoProfile -File scripts/check-links.ps1
 - Workflow: `.github/workflows/sync-cv.yml`
 - Trigger: daily schedule (05:17 UTC) + manual dispatch.
 - Rebuilds the CV from the private `shahriarzame/CV_PhD` LaTeX repo (XeLaTeX in a
-  TeXLive container, read-only access via the `CV_PHD_DEPLOY_KEY` secret) and commits
-  the PDF to `static/uploads/` only when the bytes actually change.
+  TeXLive container, read-only access via the `CV_PHD_DEPLOY_KEY` secret) and, only when
+  the bytes actually change, force-updates the bot-owned `cv-sync` branch and opens or
+  refreshes a single pull request.
+- **Merging that PR is what deploys.** Because a human merges it, the push to `main` is
+  attributed to that person rather than to `GITHUB_TOKEN`, so `publish.yaml` triggers
+  normally and no explicit dispatch step is needed.
+- It does **not** push to `main` directly. `main` is protected (PR required + 3 required
+  checks) and GitHub only allows an Actions-app bypass on *organisation*-owned repos — on
+  a personal repo that exemption cannot be granted, so a direct push is rejected (`GH006`).
 - It lives here rather than in `CV_PhD` because that repo is Overleaf-synced (which can
   silently drop `.github/`), and because Actions minutes are free on this public repo.
 - Do not "simplify" these three things — each is load-bearing and commented in the file:
-  - The final `gh workflow run publish.yaml` step. A push made with `GITHUB_TOKEN` does
-    **not** trigger other workflows, so without it the PDF lands and the site never rebuilds.
+  - Installing `openssh-client` before the checkout. The TeXLive image ships `git` but not
+    `ssh`, and `actions/checkout` needs `ssh` for deploy-key auth.
   - The absence of `set -e` in the build step. `biber` always warns here (zero citekeys)
     and XeLaTeX's exit status is unreliable under `nonstopmode`; the real gate is
     "PDF exists and the log has no `^!` lines".

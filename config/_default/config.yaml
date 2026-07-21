@@ -74,3 +74,9 @@ sitemap:
   _merge: deep
 minify:
   _merge: deep
+
+# Hugo lowercases menu URLs by default, which would turn the CV link into
+# /uploads/shahriar_iqbal_zame_cv.pdf and 404 on GitHub Pages (Linux, and so
+# case-sensitive) where the actual file is Shahriar_Iqbal_Zame_CV.pdf.
+# Verified this produces no other output-path changes.
+disablePathToLower: true

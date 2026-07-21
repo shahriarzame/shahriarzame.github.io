@@ -37,7 +37,11 @@ The recognition comes with a prize of **€1,500**, following a nomination from 
 
 ### Award Ceremony
 
-The official award will be conferred during the **TUM Awards Dinner** at the Hotel Bayerischer Hof, Munich, on **Thursday, 13 November 2025**. The event promises to be a memorable occasion celebrating achievements across the TUM community.
+The award was conferred during the **TUM Awards Dinner** at the Hotel Bayerischer Hof, Munich, on **Thursday, 13 November 2025** — a memorable occasion celebrating achievements from across the TUM community.
+
+The certificate recognises my master's thesis, *"UAM siting approach considering capacity and land use: A case study of Munich"*, and carries an excerpt from the citation by **Prof. Constantinos Antoniou**.
+
+{{< figure src="ortner-stiftung-urkunde.jpg" alt="Johannes B. Ortner-Stiftung certificate (Urkunde) awarded to Shahriar Iqbal Zame for the master's thesis 'UAM siting approach considering capacity and land use: A case study of Munich', signed by TUM President Thomas F. Hofmann, Munich, 13 November 2025." >}}
 
 ### Gratitude
 

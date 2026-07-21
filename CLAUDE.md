@@ -88,6 +88,25 @@ pwsh -NoProfile -File scripts/check-links.ps1
   a personal repo that exemption cannot be granted, so a direct push is rejected (`GH006`).
 - It lives here rather than in `CV_PhD` because that repo is Overleaf-synced (which can
   silently drop `.github/`), and because Actions minutes are free on this public repo.
+#### Runbook: when asked to "sync the CV"
+
+1. **Check the CV change is committed *and pushed* to `CV_PhD` `main`.** The workflow builds
+   from pushed source, so an unpushed edit rebuilds the *old* CV and correctly reports
+   "nothing changed" — which reads like a broken sync but is not.
+   `gh api repos/shahriarzame/CV_PhD/commits -q '.[0] | .sha, .commit.committer.date'`
+2. `gh workflow run sync-cv.yml` — then wait; the LaTeX build takes ~2 minutes.
+3. **Verify what the run actually did, not just that it went green.** A build that produces
+   nothing and a correct no-op both end with no PR. Confirm from the log that a PDF was
+   produced (`Output written on cv-llt.pdf (N pages)`) and that the pinned epoch matches
+   the CV's latest content commit.
+4. **Check the built PDF really contains the change** before handing it over — extract it
+   from the `cv-sync` branch and read it:
+   `MSYS_NO_PATHCONV=1 git show origin/cv-sync:static/uploads/Shahriar_Iqbal_Zame_CV.pdf > /tmp/cv.pdf`
+5. The PR's checks may show `action_required` — GitHub gates workflow runs on PRs authored
+   by the Actions bot. It needs "Approve and run" in the Actions tab, or an admin merge.
+6. **The user merges the PR.** That is what deploys — do not try to merge it automatically,
+   and do not push the PDF to `main` directly (see below).
+
 - Do not "simplify" these three things — each is load-bearing and commented in the file:
   - Installing `openssh-client` before the checkout. The TeXLive image ships `git` but not
     `ssh`, and `actions/checkout` needs `ssh` for deploy-key auth.

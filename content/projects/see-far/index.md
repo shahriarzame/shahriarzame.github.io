@@ -17,9 +17,11 @@ authors: [admin]
 lastmod: 2026-07-21T00:00:00+00:00
 featured: false
 image:
-  caption: ""
-  focal_point: ""
-  preview_only: false
+  caption: "Project presentations at the first SEE-FAr workshop, TUM, July 2026"
+  focal_point: "Smart"
+  # Thumbnail only: the same image is shown in the body via a figure
+  # shortcode, so rendering it as a page header too would duplicate it.
+  preview_only: true
 projects: []
 
 output:
@@ -51,7 +53,7 @@ The first SEE-FAr workshop, *Recent Advances in Electric and Automated Road Frei
 
 {{< figure src="workshop-team.jpg" caption="The SEE-FAr project team from TUM and BOKU with invited speakers, Munich, 16 July 2026." alt="SEE-FAr project team and invited speakers at TUM" >}}
 
-{{< figure src="workshop-session.jpg" caption="Project presentations on operational patterns and impacts of long-haul road freight in Bavaria and Austria." alt="Workshop presentation session at TUM" >}}
+{{< figure src="featured.jpg" caption="Project presentations on operational patterns and impacts of long-haul road freight in Bavaria and Austria." alt="Workshop presentation session at TUM" >}}
 
 {{< figure src="workshop-od-talk.jpg" caption="Presenting freight origin–destination estimation from commercial-fleet GPS and roadside traffic counts." alt="Presenting freight OD estimation results at the workshop" >}}
 

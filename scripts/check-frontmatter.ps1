@@ -63,7 +63,7 @@ function Has-NonEmptyScalar {
 $targets = @()
 $targets += Get-ChildItem (Join-Path $repoRoot "content/regular_post") -Recurse -File -Filter "index.md"
 $targets += Get-ChildItem (Join-Path $repoRoot "content/publication") -Recurse -File -Filter "index.md"
-$targets += Get-ChildItem (Join-Path $repoRoot "content/projects") -File -Filter "*.md" | Where-Object { $_.Name -ne "_index.md" }
+$targets += Get-ChildItem (Join-Path $repoRoot "content/projects") -Recurse -File -Filter "*.md" | Where-Object { $_.Name -ne "_index.md" }
 
 foreach ($file in $targets) {
   $raw = Get-Content -Raw $file.FullName

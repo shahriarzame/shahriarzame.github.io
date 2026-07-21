@@ -13,7 +13,7 @@ function Resolve-StaticPath {
 $contentFiles = @()
 $contentFiles += Get-ChildItem (Join-Path $repoRoot "content/regular_post") -Recurse -File -Filter "index.md"
 $contentFiles += Get-ChildItem (Join-Path $repoRoot "content/publication") -Recurse -File -Filter "index.md"
-$contentFiles += Get-ChildItem (Join-Path $repoRoot "content/projects") -File -Filter "*.md" | Where-Object { $_.Name -ne "_index.md" }
+$contentFiles += Get-ChildItem (Join-Path $repoRoot "content/projects") -Recurse -File -Filter "*.md" | Where-Object { $_.Name -ne "_index.md" }
 $contentFiles += Get-Item (Join-Path $repoRoot "content/authors/admin/_index.md")
 
 foreach ($file in $contentFiles) {

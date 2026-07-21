@@ -69,6 +69,25 @@ pwsh -NoProfile -File scripts/check-links.ps1
   - `frontmatter-check`
   - `link-check`
 
+### CV Sync (Automated)
+
+- Workflow: `.github/workflows/sync-cv.yml`
+- Trigger: daily schedule (05:17 UTC) + manual dispatch.
+- Rebuilds the CV from the private `shahriarzame/CV_PhD` LaTeX repo (XeLaTeX in a
+  TeXLive container, read-only access via the `CV_PHD_DEPLOY_KEY` secret) and commits
+  the PDF to `static/uploads/` only when the bytes actually change.
+- It lives here rather than in `CV_PhD` because that repo is Overleaf-synced (which can
+  silently drop `.github/`), and because Actions minutes are free on this public repo.
+- Do not "simplify" these three things — each is load-bearing and commented in the file:
+  - The final `gh workflow run publish.yaml` step. A push made with `GITHUB_TOKEN` does
+    **not** trigger other workflows, so without it the PDF lands and the site never rebuilds.
+  - The absence of `set -e` in the build step. `biber` always warns here (zero citekeys)
+    and XeLaTeX's exit status is unreliable under `nonstopmode`; the real gate is
+    "PDF exists and the log has no `^!` lines".
+  - The plain byte comparison. `SOURCE_DATE_EPOCH` is pinned to the CV's last content
+    change, so unchanged source already yields identical bytes. Normalising instead could
+    make a layout-only change compare equal and be skipped.
+
 ### Netlify (Secondary/Optional)
 
 - Config: `netlify.toml`

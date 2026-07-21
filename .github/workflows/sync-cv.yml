@@ -1,0 +1,195 @@
+name: Sync CV PDF
+
+# Rebuilds the LaTeX CV from the private shahriarzame/CV_PhD repo and commits the
+# resulting PDF into this repo. Committing to main is what makes the site update:
+# publish.yaml already triggers on push to main.
+#
+# WHY THIS LIVES HERE AND NOT IN CV_PhD:
+#   - CV_PhD is Overleaf-synced. Overleaf's GitHub integration is unreliable with
+#     dot-directories, so a .github/ there could be silently dropped and the sync
+#     would die with no signal.
+#   - This repo is public, so Actions minutes are free. CV_PhD is private and bills
+#     against the account quota.
+#   - Read-only access to CV_PhD is less privilege than write access to this repo.
+
+on:
+  schedule:
+    - cron: '17 5 * * *'      # daily, 05:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write             # commit the PDF
+  actions: write              # dispatch publish.yaml (see the last step)
+
+concurrency:
+  group: cv-sync
+  cancel-in-progress: false
+
+env:
+  CV_REPO: shahriarzame/CV_PhD
+  CANONICAL: static/uploads/Shahriar_Iqbal_Zame_CV.pdf
+  LEGACY: static/uploads/resume.pdf
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # Build runs in the TeXLive container. Kept separate from the commit job so the
+  # commit job gets a normal runner with git and gh already on PATH -- the TeXLive
+  # image is not guaranteed to ship either.
+  # ---------------------------------------------------------------------------
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: texlive/texlive:latest    # full scheme: needs the `curve` class plus
+                                       # fontawesome5, cochineal, cabin, zi4,
+                                       # etaremune, needspace, textpos, tabularx,
+                                       # silence, xpatch, biblatex+biber.
+                                       # A minimal TeXLive image will NOT work.
+    steps:
+      - name: Check out CV source
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.CV_REPO }}
+          ssh-key: ${{ secrets.CV_PHD_DEPLOY_KEY }}
+          fetch-depth: 0               # need history to derive SOURCE_DATE_EPOCH
+
+      - name: Pin the build date to the CV's own content
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          # Timestamp of the last commit that touched anything affecting the PDF.
+          # Identical source => identical epoch => identical bytes, so the commit
+          # job's byte comparison stays meaningful. It also makes the PDF's
+          # CreationDate mean "when the CV last actually changed" rather than
+          # "when CI happened to run" -- the right semantics for a document people
+          # check the freshness of.
+          EPOCH=$(git log -1 --format=%ct -- '*.tex' '*.sty' '*.png' '*.jpg' '*.bib')
+          if [ -z "$EPOCH" ]; then
+            echo "::error::could not derive SOURCE_DATE_EPOCH from git history"
+            exit 1
+          fi
+          echo "SOURCE_DATE_EPOCH=$EPOCH" >> "$GITHUB_ENV"
+          echo "FORCE_SOURCE_DATE=1"      >> "$GITHUB_ENV"
+          echo "Pinned to $EPOCH ($(date -u -d "@$EPOCH" '+%Y-%m-%d %H:%M:%S UTC'))"
+
+      - name: Build (xelatex -> biber -> xelatex -> xelatex)
+        run: |
+          # No `set -e` and no `|| exit` on the individual passes, deliberately:
+          #   - biber ALWAYS warns here ("cv-llt.bcf does not contain any
+          #     citations") because own-bib.bib is loaded but the publication list
+          #     is hand-written, so there are zero citekeys.
+          #   - xelatex's exit status is not a reliable success signal under
+          #     -interaction=nonstopmode.
+          # The real check is at the bottom: a PDF exists and the log has no
+          # unrecoverable errors.
+          xelatex -interaction=nonstopmode cv-llt.tex || true
+          biber cv-llt                                || true
+          xelatex -interaction=nonstopmode cv-llt.tex || true
+          xelatex -interaction=nonstopmode cv-llt.tex || true
+
+          if [ ! -f cv-llt.pdf ]; then
+            echo "::error::no PDF produced"
+            tail -50 cv-llt.log
+            exit 1
+          fi
+          if grep -q '^!' cv-llt.log; then
+            echo "::error::LaTeX reported errors"
+            grep -n '^!' cv-llt.log
+            exit 1
+          fi
+          echo "Built $(du -h cv-llt.pdf | cut -f1), $(pdfinfo cv-llt.pdf 2>/dev/null | awk '/^Pages/{print $2}') pages"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cv-pdf
+          path: cv-llt.pdf
+          retention-days: 1
+
+  # ---------------------------------------------------------------------------
+  commit:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: cv-pdf
+          path: incoming
+
+      - name: Commit only if the PDF actually changed
+        id: sync
+        run: |
+          set -euo pipefail
+          if cmp -s incoming/cv-llt.pdf "$CANONICAL"; then
+            echo "Unchanged -- nothing to do."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Deliberately a plain byte comparison rather than normalising away
+          # metadata first. With SOURCE_DATE_EPOCH pinned above, unchanged source
+          # already yields identical bytes, so normalising buys nothing -- and it
+          # would be actively dangerous: a change that alters layout but not
+          # extractable text (photo size, spacing, a page break) could compare
+          # "equal" and get skipped. An unnecessary commit is harmless; a missed
+          # one leaves a stale CV live.
+          # Targets are hardcoded in `env` above, never derived from the build
+          # output name. The casing is LOAD-BEARING: the site sets
+          # disablePathToLower so the nav links the mixed-case name verbatim, and
+          # GitHub Pages is case-sensitive.
+          cp incoming/cv-llt.pdf "$CANONICAL"
+          cp incoming/cv-llt.pdf "$LEGACY"    # legacy alias: keeps pre-rename
+                                              # bookmarks and email signatures
+                                              # alive, and keeps them CURRENT --
+                                              # a stale file at the old URL would
+                                              # be worse than a 404.
+
+          for f in "$CANONICAL" "$LEGACY"; do
+            [ -f "$f" ] || { echo "::error::expected $f to exist after copy"; exit 1; }
+          done
+
+          # Case-drift guard. This runner is case-sensitive; the maintainer's
+          # checkout is not. A mis-cased target would NOT overwrite the tracked
+          # file -- it would create a second one, git would cheerfully commit
+          # both, and the site would go on serving the stale original while this
+          # workflow reported success. Anything untracked appearing here means
+          # we wrote to a path nobody is serving.
+          UNTRACKED=$(git status --porcelain -- static/uploads/ | grep '^??' || true)
+          if [ -n "$UNTRACKED" ]; then
+            echo "::error::new untracked file(s) in static/uploads -- filename case drift?"
+            echo "$UNTRACKED"
+            exit 1
+          fi
+
+          git config user.name  "cv-sync[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$CANONICAL" "$LEGACY"
+          git commit -m "Sync CV PDF from CV_PhD
+
+          Rebuilt from shahriarzame/CV_PhD. Generated file -- do not hand-edit.
+          Build date pinned to the CV's last content change."
+          # Retry once on a non-fast-forward. The build and commit jobs are
+          # separate, so anything merged to main in between (a content PR, a
+          # previous sync) makes this push stale and it would otherwise just
+          # fail the run. Rebase onto the new tip and re-assert both files
+          # survived before pushing again.
+          if ! git push; then
+            echo "push rejected -- rebasing onto latest main and retrying"
+            git pull --rebase origin main
+            for f in "$CANONICAL" "$LEGACY"; do
+              [ -f "$f" ] || { echo "::error::$f missing after rebase"; exit 1; }
+            done
+            git push
+          fi
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      # A push made with GITHUB_TOKEN does NOT trigger other workflows -- GitHub
+      # suppresses it to prevent recursion. Without this step the PDF would land on
+      # main and the site would never rebuild: a silently stale CV, which is the
+      # exact failure this whole design is meant to avoid.
+      # workflow_dispatch is one of the two documented exceptions to that
+      # suppression, and publish.yaml already accepts it.
+      - name: Trigger site rebuild
+        if: steps.sync.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run publish.yaml --ref main

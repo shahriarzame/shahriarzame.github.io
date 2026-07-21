@@ -45,6 +45,17 @@ jobs:
                                        # silence, xpatch, biblatex+biber.
                                        # A minimal TeXLive image will NOT work.
     steps:
+      # The TeXLive image ships git but NOT openssh-client, and actions/checkout
+      # shells out to `ssh` when given an ssh-key. Without this the checkout dies
+      # with "Unable to locate executable file: ssh" before anything else runs.
+      # Must come before the checkout step.
+      - name: Install openssh-client (checkout needs ssh for the deploy key)
+        run: |
+          set -eu
+          apt-get update -qq
+          apt-get install -y -qq --no-install-recommends openssh-client
+          ssh -V
+
       - name: Check out CV source
         uses: actions/checkout@v4
         with:

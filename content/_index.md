@@ -24,7 +24,11 @@ sections:
         author: ""
         category: ""
         tag: ""
-        exclude_featured: false
+        # CONVENTION: a post with `featured: true` is hidden from this
+        # homepage block but still appears in the full archive at
+        # /regular_post/. Used to keep minor items off the front page
+        # without backdating them or hand-managing sort weights.
+        exclude_featured: true
         exclude_future: false
         exclude_past: false
         publication_type: ""

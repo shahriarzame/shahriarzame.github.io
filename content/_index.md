@@ -82,6 +82,21 @@ sections:
       columns: '2'
       view: citation
 
+  - block: markdown
+    id: service
+    content:
+      title: Academic Service
+      subtitle: ''
+      text: |-
+        Peer review for international journals and conferences.
+
+        - **Journal of Urban Mobility** (Elsevier) — 2 manuscripts reviewed, 2026
+        - **28th EURO Working Group on Transportation Meeting (EWGT 2026)**, Kraków, Poland — 5 manuscripts reviewed, 2026
+
+        Journal review record verified via [ORCID](https://orcid.org/0000-0002-7323-9771).
+    design:
+      columns: '2'
+
   - block: collection
     id: regular_post
     content:

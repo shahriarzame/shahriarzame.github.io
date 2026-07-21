@@ -72,7 +72,10 @@ pwsh -NoProfile -File scripts/check-links.ps1
 ### CV Sync (Automated)
 
 - Workflow: `.github/workflows/sync-cv.yml`
-- Trigger: daily schedule (05:17 UTC) + manual dispatch.
+- Trigger: **manual dispatch only** (Actions tab, or `gh workflow run sync-cv.yml`).
+  Run it after pushing a CV change to `CV_PhD`. A daily cron was deliberately dropped —
+  the CV changes rarely and always deliberately, so a schedule mostly confirms that
+  nothing changed while still costing an approval click on the bot-authored PR.
 - Rebuilds the CV from the private `shahriarzame/CV_PhD` LaTeX repo (XeLaTeX in a
   TeXLive container, read-only access via the `CV_PHD_DEPLOY_KEY` secret) and, only when
   the bytes actually change, force-updates the bot-owned `cv-sync` branch and opens or

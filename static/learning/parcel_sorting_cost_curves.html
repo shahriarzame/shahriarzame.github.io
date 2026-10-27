@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Small Parcel-Sorting Operation — Average Cost Curves</title>
+<style>
+  :root { color-scheme: light; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #182334; background:#f5f7fa; }
+  * { box-sizing: border-box; }
+  body { margin:0; }
+  main { max-width: 1130px; margin: 38px auto; padding: 0 24px 45px; }
+  h1 { margin: 0 0 10px; font-size: clamp(1.35rem,2.7vw,2rem); line-height:1.2; font-weight:750; letter-spacing:-.025em; }
+  p { margin: 0 0 22px; max-width:850px; font-size: 1rem; line-height:1.6; color:#48566a; }
+  .equations { display:flex; flex-wrap:wrap; gap:10px; margin: 0 0 23px; }
+  .equation { background:white; border:1px solid #e0e6ee; border-radius:10px; padding:13px 16px; line-height:1.5; font-size:1.04rem; box-shadow:0 1px 2px #25364d08; }
+  .equation.primary { flex: 1 1 375px; }
+  .equation.secondary { flex: 1 1 425px; }
+  .math { font-family: Cambria, "Times New Roman", serif; font-style: italic; font-size:1.14em; color:#172f4f; }
+  .layout { display:grid; grid-template-columns: minmax(265px,.83fr) minmax(500px,1.55fr); gap:20px; align-items:start; }
+  section { background:white; border:1px solid #e0e6ee; border-radius:14px; padding:20px; box-shadow:0 1px 4px #25364d09; }
+  h2 { font-size:1.08rem; margin:0 0 15px; letter-spacing:-.012em; }
+  .chart { padding:20px 14px 12px; }
+  .chart h2 { padding:0 6px; }
+  .legend { display:flex; gap:18px; flex-wrap:wrap; padding:0 8px; margin:0 0 8px; font-size:.86rem; font-weight:600; color:#4e5b6a; }
+  .legend span { display:flex; align-items:center; gap:6px; }
+  .swatch { display:inline-block; width:19px; height:4px; border-radius:3px; }
+  svg { width:100%; height:auto; display:block; }
+  svg .axis-text { font:14px Inter, ui-sans-serif, system-ui, sans-serif; fill:#5b6777; }
+  svg .axis-title { font:600 14px Inter, ui-sans-serif, system-ui, sans-serif; fill:#334155; }
+  svg .capacity-label { font:12px Inter, ui-sans-serif, system-ui, sans-serif; fill:#64748b; }
+  table { width:100%; border-collapse:collapse; font-size:.94rem; font-variant-numeric:tabular-nums; text-align:right; }
+  thead th { color:#475569; font-weight:700; background:#f3f6fa; white-space:nowrap; }
+  th,td { padding:11px 8px; border-bottom:1px solid #edf0f4; }
+  th:first-child,td:first-child { text-align:left; }
+  tbody th { font-weight:600; }
+  tbody tr:nth-child(even) { background:#fafbfd; }
+  tbody tr:nth-child(5) { background:#fff5ef; }
+  tbody tr:nth-child(5) td:last-child { color:#b45328; font-weight:750; }
+  @media (max-width: 860px) { main { margin:22px auto; padding:0 14px 28px; } .layout { grid-template-columns:1fr; } .chart { padding:18px 8px 8px; } section { padding:16px; } }
+  @media print { body { background:white; } main { margin:0; padding:10px; } section, .equation { box-shadow:none; } .layout { grid-template-columns: 1fr 1.5fr; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>A Simple Example: A Small Parcel-Sorting Operation</h1>
+  <p>A sorting station pays <strong>€4 per shift</strong> for equipment (fixed cost) and <strong>€1 per parcel</strong> for basic handling. It can process up to <strong>4 parcels efficiently</strong>; beyond that, congestion and overtime add increasing variable costs.</p>
+  <div class="equations">
+    <div class="equation primary"><span class="math">FC = 4</span><br><span class="math">VC(q) = q + 0.5[max(0, q − 4)]<sup>2</sup></span></div>
+    <div class="equation secondary"><span class="math">AFC = FC / q</span> &nbsp;·&nbsp; <span class="math">AVC = VC / q</span><br><span class="math">ATC = AFC + AVC = (FC + VC) / q</span></div>
+  </div>
+  <div class="layout">
+    <section aria-labelledby="table-title">
+      <h2 id="table-title">Average Cost Table</h2>
+      <table>
+        <thead><tr><th scope="col">Parcels (q)</th><th scope="col">AFC (€)</th><th scope="col">AVC (€)</th><th scope="col">ATC (€)</th></tr></thead>
+        <tbody><tr><th scope="row">1</th><td>4.00</td><td>1.00</td><td>5.00</td></tr>
+<tr><th scope="row">2</th><td>2.00</td><td>1.00</td><td>3.00</td></tr>
+<tr><th scope="row">3</th><td>1.33</td><td>1.00</td><td>2.33</td></tr>
+<tr><th scope="row">4</th><td>1.00</td><td>1.00</td><td>2.00</td></tr>
+<tr><th scope="row">5</th><td>0.80</td><td>1.10</td><td>1.90</td></tr>
+<tr><th scope="row">6</th><td>0.67</td><td>1.33</td><td>2.00</td></tr>
+<tr><th scope="row">7</th><td>0.57</td><td>1.64</td><td>2.21</td></tr>
+<tr><th scope="row">8</th><td>0.50</td><td>2.00</td><td>2.50</td></tr>
+<tr><th scope="row">9</th><td>0.44</td><td>2.39</td><td>2.83</td></tr>
+<tr><th scope="row">10</th><td>0.40</td><td>2.80</td><td>3.20</td></tr></tbody>
+      </table>
+    </section>
+    <section class="chart" aria-labelledby="chart-title">
+      <h2 id="chart-title">Average Cost Curves</h2>
+      <div class="legend" aria-label="Legend"><span><i class="swatch" style="background:#64748b"></i>AFC</span><span><i class="swatch" style="background:#0d9488"></i>AVC</span><span><i class="swatch" style="background:#dc6b38"></i>ATC</span></div>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 410" role="img" aria-label="Average fixed, variable and total cost by parcel quantity, from 1 to 10 parcels. Average total cost reaches its lowest value near five parcels.">
+<line x1="76" y1="344.00" x2="751" y2="344.00" stroke="#e5eaf0" stroke-width="1"/>
+<text x="63" y="349.00" text-anchor="end" class="axis-text">0</text>
+<line x1="76" y1="286.91" x2="751" y2="286.91" stroke="#e5eaf0" stroke-width="1"/>
+<text x="63" y="291.91" text-anchor="end" class="axis-text">1</text>
+<line x1="76" y1="229.82" x2="751" y2="229.82" stroke="#e5eaf0" stroke-width="1"/>
+<text x="63" y="234.82" text-anchor="end" class="axis-text">2</text>
+<line x1="76" y1="172.73" x2="751" y2="172.73" stroke="#e5eaf0" stroke-width="1"/>
+<text x="63" y="177.73" text-anchor="end" class="axis-text">3</text>
+<line x1="76" y1="115.64" x2="751" y2="115.64" stroke="#e5eaf0" stroke-width="1"/>
+<text x="63" y="120.64" text-anchor="end" class="axis-text">4</text>
+<line x1="76" y1="58.55" x2="751" y2="58.55" stroke="#e5eaf0" stroke-width="1"/>
+<text x="63" y="63.55" text-anchor="end" class="axis-text">5</text>
+<line x1="301.00" y1="30" x2="301.00" y2="344" stroke="#c3ccd8" stroke-width="1.5" stroke-dasharray="4 5"/>
+<text x="308.00" y="33" class="capacity-label">Capacity: 4</text>
+<line x1="76" y1="344" x2="756" y2="344" stroke="#66758a" stroke-width="1.5"/>
+<line x1="76" y1="25" x2="76" y2="344" stroke="#66758a" stroke-width="1.5"/>
+<line x1="76.00" y1="344" x2="76.00" y2="349" stroke="#66758a" stroke-width="1"/>
+<text x="76.00" y="368" text-anchor="middle" class="axis-text">1</text>
+<line x1="151.00" y1="344" x2="151.00" y2="349" stroke="#66758a" stroke-width="1"/>
+<text x="151.00" y="368" text-anchor="middle" class="axis-text">2</text>
+<line x1="226.00" y1="344" x2="226.00" y2="349" stroke="#66758a" stroke-width="1"/>
+<text x="226.00" y="368" text-anchor="middle" class="axis-text">3</text>
+<line x1="301.00" y1="344" x2="301.00" y2="349" stroke="#66758a" stroke-width="1"/>
+<text x="301.00" y="368" text-anchor="middle" class="axis-text">4</text>
+<line x1="376.00" y1="344" x2="376.00" y2="349" stroke="#66758a" stroke-width="1"/>
+<text x="376.00" y="368" text-anchor="middle" class="axis-text">5</text>
+<line x1="451.00" y1="344" x2="451.00" y2="349" stroke="#66758a" stroke-width="1"/>
+<text x="451.00" y="368" text-anchor="middle" class="axis-text">6</text>
+<line x1="526.00" y1="344" x2="526.00" y2="349" stroke="#66758a" stroke-width="1"/>
+<text x="526.00" y="368" text-anchor="middle" class="axis-text">7</text>
+<line x1="601.00" y1="344" x2="601.00" y2="349" stroke="#66758a" stroke-width="1"/>
+<text x="601.00" y="368" text-anchor="middle" class="axis-text">8</text>
+<line x1="676.00" y1="344" x2="676.00" y2="349" stroke="#66758a" stroke-width="1"/>
+<text x="676.00" y="368" text-anchor="middle" class="axis-text">9</text>
+<line x1="751.00" y1="344" x2="751.00" y2="349" stroke="#66758a" stroke-width="1"/>
+<text x="751.00" y="368" text-anchor="middle" class="axis-text">10</text>
+<text x="412" y="400" text-anchor="middle" class="axis-title">Parcels per shift (q)</text>
+<text transform="translate(20 190) rotate(-90)" text-anchor="middle" class="axis-title">Cost per parcel (€)</text>
+<polyline points="76.00,115.64 151.00,229.82 226.00,267.88 301.00,286.91 376.00,298.33 451.00,305.94 526.00,311.38 601.00,315.45 676.00,318.63 751.00,321.16" fill="none" stroke="#64748b" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="76.00" cy="115.64" r="3.2" fill="#64748b" stroke="white" stroke-width="1.2"/>
+<circle cx="151.00" cy="229.82" r="3.2" fill="#64748b" stroke="white" stroke-width="1.2"/>
+<circle cx="226.00" cy="267.88" r="3.2" fill="#64748b" stroke="white" stroke-width="1.2"/>
+<circle cx="301.00" cy="286.91" r="3.2" fill="#64748b" stroke="white" stroke-width="1.2"/>
+<circle cx="376.00" cy="298.33" r="3.2" fill="#64748b" stroke="white" stroke-width="1.2"/>
+<circle cx="451.00" cy="305.94" r="3.2" fill="#64748b" stroke="white" stroke-width="1.2"/>
+<circle cx="526.00" cy="311.38" r="3.2" fill="#64748b" stroke="white" stroke-width="1.2"/>
+<circle cx="601.00" cy="315.45" r="3.2" fill="#64748b" stroke="white" stroke-width="1.2"/>
+<circle cx="676.00" cy="318.63" r="3.2" fill="#64748b" stroke="white" stroke-width="1.2"/>
+<circle cx="751.00" cy="321.16" r="3.2" fill="#64748b" stroke="white" stroke-width="1.2"/>
+<polyline points="76.00,286.91 151.00,286.91 226.00,286.91 301.00,286.91 376.00,281.20 451.00,267.88 526.00,250.21 601.00,229.82 676.00,207.62 751.00,184.15" fill="none" stroke="#0d9488" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="76.00" cy="286.91" r="3.2" fill="#0d9488" stroke="white" stroke-width="1.2"/>
+<circle cx="151.00" cy="286.91" r="3.2" fill="#0d9488" stroke="white" stroke-width="1.2"/>
+<circle cx="226.00" cy="286.91" r="3.2" fill="#0d9488" stroke="white" stroke-width="1.2"/>
+<circle cx="301.00" cy="286.91" r="3.2" fill="#0d9488" stroke="white" stroke-width="1.2"/>
+<circle cx="376.00" cy="281.20" r="3.2" fill="#0d9488" stroke="white" stroke-width="1.2"/>
+<circle cx="451.00" cy="267.88" r="3.2" fill="#0d9488" stroke="white" stroke-width="1.2"/>
+<circle cx="526.00" cy="250.21" r="3.2" fill="#0d9488" stroke="white" stroke-width="1.2"/>
+<circle cx="601.00" cy="229.82" r="3.2" fill="#0d9488" stroke="white" stroke-width="1.2"/>
+<circle cx="676.00" cy="207.62" r="3.2" fill="#0d9488" stroke="white" stroke-width="1.2"/>
+<circle cx="751.00" cy="184.15" r="3.2" fill="#0d9488" stroke="white" stroke-width="1.2"/>
+<polyline points="76.00,58.55 151.00,172.73 226.00,210.79 301.00,229.82 376.00,235.53 451.00,229.82 526.00,217.58 601.00,201.27 676.00,182.24 751.00,161.31" fill="none" stroke="#dc6b38" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="76.00" cy="58.55" r="3.2" fill="#dc6b38" stroke="white" stroke-width="1.2"/>
+<circle cx="151.00" cy="172.73" r="3.2" fill="#dc6b38" stroke="white" stroke-width="1.2"/>
+<circle cx="226.00" cy="210.79" r="3.2" fill="#dc6b38" stroke="white" stroke-width="1.2"/>
+<circle cx="301.00" cy="229.82" r="3.2" fill="#dc6b38" stroke="white" stroke-width="1.2"/>
+<circle cx="376.00" cy="235.53" r="3.2" fill="#dc6b38" stroke="white" stroke-width="1.2"/>
+<circle cx="451.00" cy="229.82" r="3.2" fill="#dc6b38" stroke="white" stroke-width="1.2"/>
+<circle cx="526.00" cy="217.58" r="3.2" fill="#dc6b38" stroke="white" stroke-width="1.2"/>
+<circle cx="601.00" cy="201.27" r="3.2" fill="#dc6b38" stroke="white" stroke-width="1.2"/>
+<circle cx="676.00" cy="182.24" r="3.2" fill="#dc6b38" stroke="white" stroke-width="1.2"/>
+<circle cx="751.00" cy="161.31" r="3.2" fill="#dc6b38" stroke="white" stroke-width="1.2"/>
+<circle cx="376.00" cy="235.53" r="7.5" stroke="#dc6b38" fill="white" stroke-width="2.2"/>
+<circle cx="376.00" cy="235.53" r="3.6" fill="#dc6b38"/>
+</svg>
+    </section>
+  </div>
+</main>
+</body>
+</html>

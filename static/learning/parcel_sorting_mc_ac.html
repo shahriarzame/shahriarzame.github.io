@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parcel-Sorting Example: MC Crossing AC</title>
+  <style>
+    :root {
+      --bg: #f7f9fc;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #4b5563;
+      --line: #d1d5db;
+      --ac: #2563eb;
+      --mc: #dc2626;
+      --highlight: #059669;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+      padding: 24px;
+    }
+    .page {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 20px 22px;
+      margin-bottom: 18px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+    }
+    h1, h2 {
+      margin: 0 0 10px 0;
+    }
+    h1 { font-size: 28px; }
+    h2 { font-size: 20px; }
+    p { margin: 8px 0; }
+    .eq {
+      font-family: "Times New Roman", serif;
+      font-size: 22px;
+      background: #f8fafc;
+      border-left: 4px solid #94a3b8;
+      padding: 12px 14px;
+      margin: 12px 0;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .small { color: var(--muted); font-size: 14px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 15px;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 8px 10px;
+      text-align: right;
+    }
+    th:first-child, td:first-child { text-align: center; }
+    th {
+      background: #eef2ff;
+    }
+    .legend {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin: 10px 0 0;
+      font-size: 14px;
+    }
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .swatch {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      display: inline-block;
+    }
+    .summary {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-top: 12px;
+    }
+    #chartWrap {
+      overflow-x: auto;
+    }
+    svg text { font-family: Arial, Helvetica, sans-serif; fill: #374151; }
+    .foot { color: var(--muted); font-size: 13px; margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="card">
+      <h1>Parcel-Sorting Example: MC Crossing AC</h1>
+      <p><strong>Scenario:</strong> A small parcel-sorting station has a fixed equipment cost of <strong>€4</strong> per shift and a basic variable handling cost of <strong>€1</strong> per parcel. Up to 4 parcels, the station works efficiently. Beyond 4 parcels, congestion and overtime increase the extra cost of each additional parcel.</p>
+    </div>
+
+    <div class="card">
+      <h2>Equations</h2>
+      <div class="eq">FC = 4</div>
+      <div class="eq">VC(q) = q + 0.5 [max(0, q − 4)]<sup>2</sup></div>
+      <div class="eq">TC(q) = FC + VC(q)</div>
+      <div class="eq">AC(q) = TC(q) / q</div>
+      <div class="eq">Continuous MC(q) = dTC/dq = 1 (q ≤ 4); q − 3 (q &gt; 4)</div>
+      <div class="eq">Discrete MC(q) = TC(q) − TC(q − 1) (whole parcels)</div>
+      <p><strong>Why are the two MC values different at q = 5?</strong> The whole fifth parcel adds €9.50 − €8.00 = <strong>€1.50</strong> to total cost. But the instantaneous slope <em>at</em> q = 5 is <strong>€2.00</strong>. The red curve uses the instantaneous derivative, so it intersects AC at the continuous minimum.</p>
+      <p class="small">The two approaches describe different quantities: a finite increase of one parcel versus a slope at a point.</p>
+      <div class="summary">
+        <strong>Intersection / minimum AC point:</strong> 
+        <span id="intersectionText"></span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Table</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>q</th>
+            <th>FC</th>
+            <th>VC</th>
+            <th>TC</th>
+            <th>AFC</th>
+            <th>AVC</th>
+            <th>AC</th>
+            <th>MC (ΔTC)</th>
+            <th>MC (derivative)</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>Chart</h2>
+      <div class="legend">
+        <span><i class="swatch" style="background: var(--ac)"></i> Average Cost (AC)</span>
+        <span><i class="swatch" style="background: var(--mc)"></i> Continuous Marginal Cost (dTC/dq)</span>
+        <span><i class="swatch" style="background: var(--highlight)"></i> Minimum AC / intersection point</span>
+      </div>
+      <div id="chartWrap">
+        <svg id="chart" width="920" height="520" viewBox="0 0 920 520" role="img" aria-label="Chart of AC and MC curves for the parcel-sorting example"></svg>
+      </div>
+      <p class="foot">The red line is instantaneous marginal cost, not the cost of each whole additional parcel. For integer parcel counts, use the MC (ΔTC) column in the table. The AC curve reaches its continuous minimum around q = 4.90; the best whole-number quantity is 5 parcels.</p>
+    </div>
+  </div>
+
+  <script>
+    const FC = 4;
+
+    function VC(q) {
+      return q + 0.5 * Math.pow(Math.max(0, q - 4), 2);
+    }
+    function TC(q) {
+      return FC + VC(q);
+    }
+    function AFC(q) {
+      return FC / q;
+    }
+    function AVC(q) {
+      return VC(q) / q;
+    }
+    function AC(q) {
+      return TC(q) / q;
+    }
+    function MC(q) {
+      return q <= 4 ? 1 : q - 3;
+    }
+    function fmt(x) {
+      return Number(x).toFixed(2);
+    }
+
+    // Fill table for q = 1..10
+    const tbody = document.getElementById('tableBody');
+    for (let q = 1; q <= 10; q++) {
+      const row = document.createElement('tr');
+      if (q === 5) row.style.background = '#ecfdf5';
+      const values = [
+        q,
+        fmt(FC),
+        fmt(VC(q)),
+        fmt(TC(q)),
+        fmt(AFC(q)),
+        fmt(AVC(q)),
+        fmt(AC(q)),
+        fmt(TC(q) - TC(q - 1)),
+        fmt(MC(q))
+      ];
+      values.forEach((v) => {
+        const td = document.createElement('td');
+        td.textContent = v;
+        row.appendChild(td);
+      });
+      tbody.appendChild(row);
+    }
+
+    // Analytical intersection for q > 4:
+    // AC = 12/q - 3 + 0.5q, MC = q - 3
+    // => q - 3 = 12/q - 3 + 0.5q => 0.5q = 12/q => q^2 = 24
+    const qStar = Math.sqrt(24);
+    const yStar = AC(qStar);
+    document.getElementById('intersectionText').textContent =
+      `q ≈ ${fmt(qStar)} parcels, with AC = MC ≈ €${fmt(yStar)} per parcel.`;
+
+    // Draw SVG chart
+    const svg = document.getElementById('chart');
+    const W = 920, H = 520;
+    const margin = { top: 30, right: 28, bottom: 56, left: 72 };
+    const iw = W - margin.left - margin.right;
+    const ih = H - margin.top - margin.bottom;
+    const xmin = 1, xmax = 10, ymin = 0, ymax = 7.5;
+
+    function xScale(x) {
+      return margin.left + (x - xmin) / (xmax - xmin) * iw;
+    }
+    function yScale(y) {
+      return margin.top + ih - (y - ymin) / (ymax - ymin) * ih;
+    }
+
+    function el(name, attrs = {}, parent = svg) {
+      const n = document.createElementNS('http://www.w3.org/2000/svg', name);
+      for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v);
+      parent.appendChild(n);
+      return n;
+    }
+
+    // Background
+    el('rect', { x: 0, y: 0, width: W, height: H, fill: '#ffffff' });
+
+    // Gridlines and axes
+    for (let y = 0; y <= 7.5; y += 0.5) {
+      el('line', {
+        x1: margin.left,
+        y1: yScale(y),
+        x2: W - margin.right,
+        y2: yScale(y),
+        stroke: y === 0 ? '#6b7280' : '#e5e7eb',
+        'stroke-width': y === 0 ? 1.5 : 1
+      });
+      if (y < ymax) {
+        const t = el('text', {
+          x: margin.left - 10,
+          y: yScale(y) + 4,
+          'text-anchor': 'end',
+          'font-size': 12
+        });
+        t.textContent = y.toFixed(1);
+      }
+    }
+    for (let x = 1; x <= 10; x += 1) {
+      el('line', {
+        x1: xScale(x), y1: margin.top,
+        x2: xScale(x), y2: margin.top + ih,
+        stroke: '#f1f5f9', 'stroke-width': 1
+      });
+      const t = el('text', {
+        x: xScale(x), y: margin.top + ih + 20,
+        'text-anchor': 'middle', 'font-size': 12
+      });
+      t.textContent = x.toString();
+    }
+    el('line', { x1: margin.left, y1: margin.top + ih, x2: W - margin.right, y2: margin.top + ih, stroke: '#374151', 'stroke-width': 1.5 });
+    el('line', { x1: margin.left, y1: margin.top, x2: margin.left, y2: margin.top + ih, stroke: '#374151', 'stroke-width': 1.5 });
+
+    // Axis labels
+    let tx = el('text', { x: margin.left + iw / 2, y: H - 14, 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 'bold' });
+    tx.textContent = 'Quantity of parcels (q)';
+    let ty = el('text', { x: 18, y: margin.top + ih / 2, transform: `rotate(-90 18 ${margin.top + ih / 2})`, 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 'bold' });
+    ty.textContent = 'Cost (€ per parcel)';
+
+    function buildPath(fn, step = 0.05) {
+      let d = '';
+      for (let x = xmin; x <= xmax + 1e-9; x += step) {
+        const px = xScale(x);
+        const py = yScale(fn(x));
+        d += (d ? ' L ' : 'M ') + px + ' ' + py;
+      }
+      return d;
+    }
+
+    el('path', {
+      d: buildPath(AC), fill: 'none', stroke: getComputedStyle(document.documentElement).getPropertyValue('--ac').trim(),
+      'stroke-width': 3
+    });
+    el('path', {
+      d: buildPath(MC), fill: 'none', stroke: getComputedStyle(document.documentElement).getPropertyValue('--mc').trim(),
+      'stroke-width': 3
+    });
+
+    // Intersection guides
+    el('line', { x1: xScale(qStar), y1: yScale(0), x2: xScale(qStar), y2: yScale(yStar), stroke: '#10b981', 'stroke-dasharray': '5,5', 'stroke-width': 1.5 });
+    el('line', { x1: xScale(1), y1: yScale(yStar), x2: xScale(qStar), y2: yScale(yStar), stroke: '#10b981', 'stroke-dasharray': '5,5', 'stroke-width': 1.5 });
+    el('circle', { cx: xScale(qStar), cy: yScale(yStar), r: 5, fill: '#059669' });
+
+    let lbl = el('text', { x: xScale(qStar) + 10, y: yScale(yStar) - 10, 'font-size': 13, 'font-weight': 'bold', fill: '#065f46' });
+    lbl.textContent = `MC = AC at q ≈ ${fmt(qStar)}`;
+
+    // Curve labels
+    let acLabel = el('text', { x: xScale(8.4), y: yScale(AC(8.4)) - 12, 'font-size': 13, 'font-weight': 'bold', fill: '#2563eb' });
+    acLabel.textContent = 'AC';
+    let mcLabel = el('text', { x: xScale(8.2), y: yScale(MC(8.2)) - 8, 'font-size': 13, 'font-weight': 'bold', fill: '#dc2626' });
+    mcLabel.textContent = 'MC';
+  </script>
+</body>
+</html>

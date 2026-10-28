@@ -7,7 +7,7 @@ authors:
 - Hao Wu
 - Constantinos Antoniou
 
-date: 2026-12-01T00:00:00+00:00
+date: 2026-10-14T00:00:00+00:00  # online date; issue is Dec 2026 (a future date hides the page)
 doi: 10.1016/j.urbmob.2026.100304
 
 publication_types: article-journal
